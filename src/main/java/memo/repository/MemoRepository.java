@@ -35,18 +35,11 @@ public class MemoRepository {
 		em.persist(memo);
 	}
 
-	public static void updateMemo(Long memoId, String newComment, EntityManager em) {
-		Memo memo = findById(memoId, em);
-		if (memo != null) {
-			memo.updateComment(newComment);
-			em.merge(memo);
-		}
+	public static void updateMemo(Memo memo, EntityManager em) {
+		em.merge(memo);
 	}
 
-	public static void deleteMemo(Long id, EntityManager em) {
-        Memo memo = findById(id, em);
-        if (memo != null) {
-            em.remove(memo);
-        }
+	public static void deleteMemo(Memo memo, EntityManager em) {
+        em.remove(memo);
     }
 }
