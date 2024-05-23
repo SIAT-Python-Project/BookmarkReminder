@@ -19,6 +19,13 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 public class Category {
+	
+	public Category(String categoryName, List<BookmarkCategory> bookmarkCategories) {
+		super();
+		this.categoryName = categoryName;
+		this.bookmarkCategories = bookmarkCategories;
+	}
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
@@ -33,10 +40,4 @@ public class Category {
     public void changeCategoryName(String newCategoryName) {
     	this.categoryName = newCategoryName;
     }
-
-	public Category(String categoryName, List<BookmarkCategory> bookmarkCategories) {
-		super();
-		this.categoryName = categoryName;
-		this.bookmarkCategories = bookmarkCategories;
-	}
 }
