@@ -91,17 +91,8 @@ public class HGTest {
     }
 
     // successes Test
-    public static void updateUserTest(EntityManager em, Long id, User newUser) {
-        UserRepository.update(em, id, newUser);
-
-        User user = UserRepository.findUserByUserId(em, id);
-
-        System.out.println(user);
-    }
-
-    // successes Test
     public static void deleteUserTest(EntityManager em, Long id) {
-        UserRepository.delete(em, id);
-        UserRepository.findUserByUserId(em, id);
+        User deleteUser = UserRepository.findUserByUserId(em, id);
+        UserRepository.delete(em, deleteUser);
     }
 }

@@ -45,15 +45,7 @@ public class UserRepository {
                 .getSingleResult();
     }
 
-    public static void update(EntityManager em, Long id, User newUser) {
-        User targetUser = findUserByUserId(em, id);
-
-        targetUser.change(newUser);
-    }
-
-    public static void delete(EntityManager em, Long id) {
-        User targetUser = findUserByUserId(em, id);
-
-        em.remove(targetUser);
+    public static void delete(EntityManager em, User deleteUser) {
+        em.remove(deleteUser);
     }
 }
