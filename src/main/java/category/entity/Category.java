@@ -13,21 +13,30 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Category {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long categoryId;
-
+	
 	@Column(name = "category_name")
     private String categoryName;
 
     @OneToMany(mappedBy = "category")
     private List<BookmarkCategory> bookmarkCategories;
+    
+    public void changeCategoryName(String newCategoryName) {
+    	this.categoryName = newCategoryName;
+    }
+
+	public Category(String categoryName, List<BookmarkCategory> bookmarkCategories) {
+		super();
+		this.categoryName = categoryName;
+		this.bookmarkCategories = bookmarkCategories;
+	}
 }
