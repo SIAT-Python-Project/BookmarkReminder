@@ -24,6 +24,12 @@ public class MemoRepository {
         return em.createQuery("SELECT m FROM Memo m ORDER BY m.createdDate ASC", Memo.class)
                  .getResultList();
     }
+	
+	public static List<Memo> findMemosByBookmarkId(Long bookmarkId, EntityManager em) {
+        return em.createQuery("SELECT m FROM Memo m WHERE m.bookmark.bookmarkId = :bookmarkId", Memo.class)
+                 .setParameter("bookmarkId", bookmarkId)
+                 .getResultList();
+    }
 
 	public static void saveMemo(Memo memo, EntityManager em) {
 		em.persist(memo);
