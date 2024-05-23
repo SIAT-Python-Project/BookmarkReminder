@@ -34,4 +34,8 @@ public class Memo {
     @ManyToOne
     @JoinColumn(name = "bookmark_bookmark_id")
     private Bookmark bookmark;
+    
+    public void updateComment(String newComment) {
+        this.comment = newComment;
+    }
 }
