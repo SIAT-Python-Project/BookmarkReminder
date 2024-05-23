@@ -1,4 +1,4 @@
-package test;
+package test.hgyellow;
 
 import common.util.DbUtil;
 import jakarta.persistence.EntityManager;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HGTest {
+public class HGUserRepositoryTest {
     private static EntityManager em = DbUtil.getEntityManager();
     private static List<User> users = new ArrayList<>();
 
@@ -36,7 +36,6 @@ public class HGTest {
 
             // test code
             deleteUserTest(em, 1L);
-
 
             tx.commit();
         } catch (Exception e) {
