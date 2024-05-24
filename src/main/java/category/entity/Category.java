@@ -18,13 +18,10 @@ import lombok.ToString;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
 public class Category {
-	
-	public Category(String categoryName, List<BookmarkCategory> bookmarkCategories) {
-		super();
-		this.categoryName = categoryName;
-		this.bookmarkCategories = bookmarkCategories;
-	}
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

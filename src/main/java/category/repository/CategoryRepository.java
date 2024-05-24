@@ -29,7 +29,7 @@ public class CategoryRepository {
 	}
 	
 	// Category 삭제
-	public static void deleteCategoryById(EntityManager em, Category category) {
+	public static void deleteCategory(EntityManager em, Category category) {
 		em.remove(category);
 	}
 	
