@@ -15,16 +15,6 @@ public class CategoryRepository {
 		return category;
 	}
 	
-	// category_name을 이용하여 Category 존재 여부 확인
-	public static Category existCategoryByName(EntityManager em, String categoryName) {
-		String sql = "SELECT c FROM Category c WHERE c.categoryName = :categoryName";
-		Category category = em.createQuery(sql, Category.class)
-				 			.setParameter("categoryName", categoryName.toUpperCase())
-				 			.getSingleResult();
-		
-		return category;
-	}
-	
 	// 모든 Category 찾기
 	public static List<Category> findAllCategories(EntityManager em) {
 		String sql = "SELECT c FROM Category c";
