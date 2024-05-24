@@ -18,7 +18,7 @@
         </div>
         <div class="textForm userFrom">
             <span>이메일</span>
-            <span name="email" type="text" class="email">${requestScope.userDTO.loginId}</span>
+            <span name="email" type="text" class="email">${requestScope.userDTO.email}</span>
         </div>
         <div class="textForm userFrom">
             <span>닉네임</span>
