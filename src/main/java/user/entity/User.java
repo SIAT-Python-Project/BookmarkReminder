@@ -1,6 +1,8 @@
 package user.entity;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.*;
+import user.dto.UserDTO;
 
 @Entity
 @Getter
@@ -48,5 +51,15 @@ public class User {
         if (newUser.password != null) {
             this.password = newUser.password;
         }
+    }
+
+    public UserDTO toDTO() {
+
+        return UserDTO.builder()
+                .loginId(loginId)
+                .nickname(nickname)
+                .email(email)
+                .createdDate(createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .build();
     }
 }

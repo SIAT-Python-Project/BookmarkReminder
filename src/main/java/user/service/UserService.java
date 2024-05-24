@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import org.hibernate.exception.ConstraintViolationException;
+import user.dto.UserDTO;
 import user.entity.User;
 import user.repository.UserRepository;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 public class UserService {
     public static User signup(String loginId,
                               String password,
+                              String passwordConfirm,
                               String nickname,
                               String email) {
 
@@ -26,6 +28,10 @@ public class UserService {
                 .build();
 
         User initUser = null;
+
+        if (!Objects.equals(password, passwordConfirm)) {
+            throw new IllegalArgumentException("회원가입 실패: 비밀번호 확인을 제대로 입력해주세요.");
+        }
 
         EntityManager em = DbUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -64,7 +70,7 @@ public class UserService {
         return user;
     }
 
-    public static void updatePassword(Long id, String password, String newPassword) {
+    public static void updatePassword(Long id, String password, String newPassword, String pwConfirm) {
         EntityManager em = DbUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -79,6 +85,10 @@ public class UserService {
 
             if (!Objects.equals(targetUser.getPassword(), password)) {
                 throw new IllegalArgumentException("수정 실패: 기존 비밀번호가 틀렸습니다.");
+            }
+
+            if (!Objects.equals(newPassword, pwConfirm)) {
+                throw new IllegalArgumentException("수정 실패: 비밀번호 확인을 제대로 입력해주세요.");
             }
 
             targetUser.change(newUser);
@@ -107,5 +117,22 @@ public class UserService {
         } catch (NoResultException e) {
             throw new IllegalArgumentException("삭제 실패: 유저의 정보가 없습니다.");
         }
+    }
+
+    public static UserDTO findById(Long id) {
+        EntityManager em = DbUtil.getEntityManager();
+        UserDTO userDTO = null;
+        try {
+            User user = UserRepository.findUserByUserId(em, id);
+            userDTO = user.toDTO();
+        } catch (NoResultException e) {
+            throw new IllegalArgumentException("조회 실패: 해당하는 유저가 없습니다.");
+        } finally {
+            em.close();
+        }
+
+
+
+        return userDTO;
     }
 }

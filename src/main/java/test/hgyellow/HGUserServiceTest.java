@@ -38,6 +38,7 @@ public class HGUserServiceTest {
         users.forEach(user -> {
             UserService.signup(user.getLoginId(),
                     user.getPassword(),
+                    user.getPassword(),
                     user.getNickname(),
                     user.getEmail());
         });
@@ -50,6 +51,7 @@ public class HGUserServiceTest {
 
         try {
             User user = UserService.signup(loginId,
+                    password,
                     password,
                     nickname,
                     email);
@@ -72,7 +74,7 @@ public class HGUserServiceTest {
 
     private static void updatePassword(Long id, String password, String newPassword) {
         try {
-            UserService.updatePassword(id, password, newPassword);
+            UserService.updatePassword(id, password, newPassword, newPassword);
             System.out.println("수정 성공!");
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
