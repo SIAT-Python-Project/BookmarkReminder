@@ -1,0 +1,42 @@
+header {
+    width: 100%;
+    position: fixed;
+    height: 50px;
+    top: 0;
+    left: 0;
+    background-color: #34495e;
+}
+
+.header-container {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.header-text {
+    color: white;
+}
+
+.header-user-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.header-span > input {
+    border: none;
+    outline: none;
+    color: white;
+    background: none;
+    text-decoration : underline;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+body {
+     padding-top: 50px;
+}
