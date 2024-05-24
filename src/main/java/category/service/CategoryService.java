@@ -16,6 +16,7 @@ public class CategoryService {
 	// 3) updateCategory --> IllegalArgumentException (find 이용 시 primary key X)
 	// 4) deleteCategory --> IllegalArgumentException (find 이용 시 primary key X)
 	// 5) createCategory --> 1) 이용하여 이름 중복 확인
+	// 6) findAllCategories
 	
 	public static EntityManager em;
 	public static EntityTransaction tx;
@@ -30,6 +31,14 @@ public class CategoryService {
 			}
 		}
 		return false;
+	}
+	
+	// get all categories
+	
+	public static List<Category> getAllCategories(){
+		em = DbUtil.getEntityManager();
+		
+		return CategoryRepository.findAllCategories(em);
 	}
 	
 	// get Category
