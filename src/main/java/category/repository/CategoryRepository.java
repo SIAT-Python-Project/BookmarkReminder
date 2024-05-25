@@ -18,6 +18,7 @@ public class CategoryRepository {
 	public static List<Category> findCategoriesByUserId(EntityManager em, User user){
 		String sql = "SELECT c FROM Category c WHERE c.user = :user";
 		List<Category> categoriesByUserId = em.createQuery(sql, Category.class)
+											  .setParameter("user", user)
 											  .getResultList();
 		return categoriesByUserId;
 	}
