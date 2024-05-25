@@ -1,6 +1,7 @@
 package user.service;
 
 import common.util.DbUtil;
+import common.util.PasswordEncipherUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
@@ -19,19 +20,19 @@ public class UserService {
                               String nickname,
                               String email) {
 
+        if (!Objects.equals(password, passwordConfirm)) {
+            throw new IllegalArgumentException("회원가입 실패: 비밀번호 확인을 제대로 입력해주세요.");
+        }
+
         User user = User.builder()
                 .loginId(loginId)
-                .password(password)
+                .password(PasswordEncipherUtil.createPassword(password))
                 .nickname(nickname)
                 .email(email)
                 .createdDate(LocalDateTime.now())
                 .build();
 
         User initUser = null;
-
-        if (!Objects.equals(password, passwordConfirm)) {
-            throw new IllegalArgumentException("회원가입 실패: 비밀번호 확인을 제대로 입력해주세요.");
-        }
 
         EntityManager em = DbUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -58,7 +59,7 @@ public class UserService {
         try {
              user = UserRepository.findUserByLoginId(em, loginId);
 
-             if (!Objects.equals(user.getPassword(), password)) {
+             if (!PasswordEncipherUtil.matchPassword(password, user.getPassword())) {
                  throw new IllegalArgumentException("로그인 실패: 비밀번호가 일치하지 않습니다.");
              }
         } catch (NoResultException e) {
@@ -75,7 +76,7 @@ public class UserService {
         EntityTransaction tx = em.getTransaction();
 
         User newUser = User.builder()
-                .password(newPassword)
+                .password(PasswordEncipherUtil.createPassword(newPassword))
                 .build();
 
         tx.begin();
@@ -83,7 +84,7 @@ public class UserService {
         try {
             User targetUser = UserRepository.findUserByUserId(em, id);
 
-            if (!Objects.equals(targetUser.getPassword(), password)) {
+            if (!PasswordEncipherUtil.matchPassword(password, targetUser.getPassword())) {
                 throw new IllegalArgumentException("수정 실패: 기존 비밀번호가 틀렸습니다.");
             }
 
