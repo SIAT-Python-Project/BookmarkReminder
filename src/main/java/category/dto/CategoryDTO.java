@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import bookmarkcategory.dto.BookmarkCategoryDTO;
+import category.dto.CategoryDTO;
 import category.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
