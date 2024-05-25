@@ -1,6 +1,9 @@
 package user.entity;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import bookmark.entity.Bookmark;
@@ -10,26 +13,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import user.dto.UserDTO;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString(exclude = "bookMarks")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "login_id")
+    @Column(name = "login_id", unique = true)
     private String loginId;
 
-    @Column(name="password")
+    @Column(name="password", length = 1000)
     private String password;
 
     @Column(name = "nickname")
@@ -42,5 +45,21 @@ public class User {
     private LocalDateTime createdDate;
 
     @OneToMany(mappedBy = "user")
-    private List<Bookmark> bookMarks;
+    private List<Bookmark> bookMarks = new ArrayList<>();
+
+    public void change(User newUser) {
+        if (newUser.password != null) {
+            this.password = newUser.password;
+        }
+    }
+
+    public UserDTO toDTO() {
+
+        return UserDTO.builder()
+                .loginId(loginId)
+                .nickname(nickname)
+                .email(email)
+                .createdDate(createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .build();
+    }
 }

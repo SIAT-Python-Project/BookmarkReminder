@@ -6,6 +6,8 @@
 .project
 /target
 persistence.xml
+bookmarkReminder.iml
+application.properties
 
 
 ### Eclipse ###

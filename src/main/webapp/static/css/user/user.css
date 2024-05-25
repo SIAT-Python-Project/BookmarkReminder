@@ -1,0 +1,170 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #34495e;
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    justify-content: center;
+    align-content: center;
+}
+
+.joinForm {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 680px;
+    padding: 30px 20px;
+    background-color: #FFFFFF;
+    text-align: center;
+    top: 40%;
+    left: 50%;
+    border-radius: 15px;
+}
+
+.joinForm h2 {
+    text-align: center;
+    margin: 30px;
+}
+
+.textForm {
+    border-bottom: 2px solid #adadad;
+    margin: 30px;
+    padding: 10px 10px;
+}
+
+.btnForm {
+    padding: 10px 10px;
+}
+
+.id {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #636e72;
+    font-size: 16px;
+    height: 25px;
+    background: none;
+}
+
+.pw {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #636e72;
+    font-size: 16px;
+    height: 25px;
+    background: none;
+}
+
+.email {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #636e72;
+    font-size: 16px;
+    height: 25px;
+    background: none;
+}
+
+.nickname {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #636e72;
+    font-size: 16px;
+    height: 25px;
+    background: none;
+}
+
+.created-date {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #636e72;
+    font-size: 16px;
+    height: 25px;
+    background: none;
+}
+
+.btn, .signup-btn {
+    margin-bottom: 40px;
+    width: 80%;
+    height: 40px;
+    background: linear-gradient(125deg, #81ecec, #6c5ce7, #81ecec);
+    background-size: 200%;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.btn:hover, .signup-btn:hover {
+    background-position: right;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 480px;
+    padding: 30px 20px;
+    background-color: #FFFFFF;
+    text-align: center;
+    top: 40%;
+    left: 50%;
+    border-radius: 15px;
+}
+
+.user-info-body {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 550px;
+    padding: 30px 20px;
+    background-color: #FFFFFF;
+    text-align: center;
+    top: 40%;
+    left: 50%;
+    border-radius: 15px;
+}
+
+.userFrom {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.user-info-btn {
+    margin-top: 20px;
+}
+
+.originPw {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #636e72;
+    font-size: 16px;
+    height: 25px;
+    background: none;
+}
+
+.puForm {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 500px;
+    padding: 30px 20px;
+    background-color: #FFFFFF;
+    text-align: center;
+    top: 40%;
+    left: 50%;
+    border-radius: 15px;
+}
