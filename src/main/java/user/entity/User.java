@@ -32,7 +32,7 @@ public class User {
     @Column(name = "login_id", unique = true)
     private String loginId;
 
-    @Column(name="password")
+    @Column(name="password", length = 1000)
     private String password;
 
     @Column(name = "nickname")
