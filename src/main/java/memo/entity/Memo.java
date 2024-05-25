@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import memo.dto.MemoDTO;
 
 @Entity
 @Getter
@@ -32,10 +33,19 @@ public class Memo {
     private LocalDateTime createdDate;
 
     @ManyToOne
-    @JoinColumn(name = "bookmark_bookmark_id")
+    @JoinColumn(name = "bookmark_id")
     private Bookmark bookmark;
     
     public void updateComment(String newComment) {
         this.comment = newComment;
+    }
+    
+    public MemoDTO toDTO() {
+        return MemoDTO.builder()
+                      .memoId(memoId)
+                      .comment(comment)
+                      .createdDate(createdDate)
+                      .bookmark(bookmark.toDTO())
+                      .build();
     }
 }

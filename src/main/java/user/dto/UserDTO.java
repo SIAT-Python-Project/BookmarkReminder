@@ -1,12 +1,13 @@
 package user.dto;
 
 
-import jakarta.persistence.Column;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
+import user.entity.User;
 
 @Data
 @AllArgsConstructor
@@ -16,4 +17,13 @@ public class UserDTO {
     private String nickname;
     private String email;
     private String createdDate;
+    
+    public User toEntity() {
+        return User.builder()
+                .loginId(loginId)
+                .nickname(nickname)
+                .email(email)
+                .createdDate(LocalDateTime.parse(createdDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .build();
+    }
 }

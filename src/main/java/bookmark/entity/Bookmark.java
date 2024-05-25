@@ -3,7 +3,9 @@ package bookmark.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import bookmark.dto.BookmarkDTO;
 import bookmarkcategory.entity.BookmarkCategory;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,9 +44,26 @@ public class Bookmark {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "bookmark")
+    @OneToMany(mappedBy = "bookmark", cascade = CascadeType.REMOVE)
     private List<BookmarkCategory> bookmarkCategories;
 
-    @OneToMany(mappedBy = "bookmark")
+    @OneToMany(mappedBy = "bookmark", cascade = CascadeType.REMOVE)
     private List<Memo> memos;
+    
+    public BookmarkDTO toDTO() {
+        return BookmarkDTO.builder()
+                          .bookmarkId(bookmarkId)
+                          .bookmarkName(bookmarkName)
+                          .url(url)
+                          .createdDate(createdDate)
+                          .user(user.toDTO())
+//                        .bookmarkCategories(bookmarkCategories.stream()
+//                                                              .map(BookmarkCategory::toDTO)
+//                                                              .collect(Collectors.toList()))
+//                        .memos(memos.stream()
+//                                    .map(Memo::toDTO)
+//                                    .collect(Collectors.toList()))
+                          .build();
+    }
+        
 }

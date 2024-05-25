@@ -1,8 +1,10 @@
 package category.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import bookmarkcategory.entity.BookmarkCategory;
+import category.dto.CategoryDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +22,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class Category {
 	
 	@Id
@@ -36,5 +37,15 @@ public class Category {
     
     public void changeCategoryName(String newCategoryName) {
     	this.categoryName = newCategoryName;
+    }
+    
+    public CategoryDTO toDTO() {
+        return CategoryDTO.builder()
+                          .categoryId(categoryId)
+                          .categoryName(categoryName)
+//                        .bookmarkCategories(bookmarkCategories.stream()
+//                                                .map(BookmarkCategory::toDTO)
+//                                                .collect(Collectors.toList()))
+            .build();
     }
 }

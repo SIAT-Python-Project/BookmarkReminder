@@ -1,6 +1,7 @@
 package bookmarkcategory.entity;
 
 import bookmark.entity.Bookmark;
+import bookmarkcategory.dto.BookmarkCategoryDTO;
 import category.entity.Category;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,4 +34,12 @@ public class BookmarkCategory {
     @ManyToOne
     @JoinColumn(name = "bookmark_id")
     private Bookmark bookmark;
+    
+    public BookmarkCategoryDTO toDTO() {
+        return BookmarkCategoryDTO.builder()
+                                  .bookmarkCategoryId(bookmarkCategoryId)
+                                  .category(category.toDTO()) 
+                                  .bookmark(bookmark.toDTO())
+                                  .build();
+    }
 }
