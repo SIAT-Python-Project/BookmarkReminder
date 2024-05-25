@@ -1,6 +1,7 @@
 package category.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import bookmarkcategory.entity.BookmarkCategory;
 import jakarta.persistence.CascadeType;
@@ -24,7 +25,6 @@ import user.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class Category {
 	
 	@Id
@@ -44,5 +44,15 @@ public class Category {
     
     public void changeCategoryName(String newCategoryName) {
     	this.categoryName = newCategoryName;
+    }
+    
+    public CategoryDTO toDTO() {
+        return CategoryDTO.builder()
+                          .categoryId(categoryId)
+                          .categoryName(categoryName)
+//                        .bookmarkCategories(bookmarkCategories.stream()
+//                                                .map(BookmarkCategory::toDTO)
+//                                                .collect(Collectors.toList()))
+            .build();
     }
 }
