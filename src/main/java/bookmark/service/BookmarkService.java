@@ -3,30 +3,44 @@ package bookmark.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import bookmark.dto.BookmarkDTO;
 import bookmark.entity.Bookmark;
 import bookmark.repository.BookmarkRepository;
+import bookmarkcategory.entity.BookmarkCategory;
+import bookmarkcategory.repository.BookmarkCategoryRepository;
+import category.entity.Category;
+import category.repository.CategoryRepository;
 import common.util.DbUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import user.entity.User;
+import user.repository.UserRepository;
 
 public class BookmarkService {
 	
-	public static Bookmark addBookmark(String bookmarkName, String url, User user) {
-        Bookmark bookmark = Bookmark.builder()
-                .bookmarkName(bookmarkName)
-                .url(url)
-                .createdDate(LocalDateTime.now())
-                .user(user)
-                .build(); 
+	public static void addBookmark(String bookmarkName, String url, Long userId, Long categoryId) {      
 
         EntityManager em = DbUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        try {
+        try {        	
+        	User user = UserRepository.findUserByUserId(em, userId);
+        	Bookmark bookmark = Bookmark.builder()
+						                .bookmarkName(bookmarkName)
+						                .url(url)
+						                .createdDate(LocalDateTime.now())
+						                .user(user)
+						                .build();
             BookmarkRepository.saveBookmark(bookmark, em);
+            
+            Category category = CategoryRepository.findCategoryById(em, categoryId);
+            
+            BookmarkCategoryRepository.saveMemo(BookmarkCategory.builder()
+            													.category(category)
+            													.bookmark(bookmark)
+            													.build(), em);
             tx.commit();
         } catch (Exception e) {
         	e.printStackTrace();
@@ -36,25 +50,25 @@ public class BookmarkService {
             em.close();
         }
 
-        return bookmark;
     }
 	
-	public static Bookmark getBookmark(Long id) {
+	public static BookmarkDTO getBookmark(Long id) {
         EntityManager em = DbUtil.getEntityManager();
         Bookmark bookmark = null;
-
+        BookmarkDTO bookmarkDTO = null;     
         try {
             bookmark = BookmarkRepository.findById(id, em);
             if (bookmark == null) {
                 throw new IllegalArgumentException("북마크 조회 실패: 해당 ID의 북마크가 존재하지 않습니다.");
             }
+            bookmarkDTO = bookmark.toDTO();
         } catch (NoResultException e) {
             throw new IllegalArgumentException("북마크 조회 실패: " + e.getMessage());
         } finally {
             em.close();
         }
 
-        return bookmark;
+        return bookmarkDTO;
     }
 	
 	public static List<Bookmark> getAllBookmarks() {

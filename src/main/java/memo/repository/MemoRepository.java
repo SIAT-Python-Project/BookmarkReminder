@@ -15,22 +15,21 @@ public class MemoRepository {
 		return em.createQuery("SELECT m FROM Memo m", Memo.class).getResultList();
 	}
 	
-	public static List<Memo> findRecentMemos(EntityManager em) {
-        return em.createQuery("SELECT m FROM Memo m ORDER BY m.createdDate DESC", Memo.class)
-                 .getResultList();
-    }
+	//북마크 id 기준으로 오래된 순으로
+	public static List<Memo> findMemosByBookmarkIdOldest(Long bookmarkId, EntityManager em) {
+	    return em.createQuery("SELECT m FROM Memo m WHERE m.bookmark.bookmarkId = :bookmarkId ORDER BY m.createdDate ASC", Memo.class)
+	             .setParameter("bookmarkId", bookmarkId)
+	             .getResultList();
+	}
 	
-	public static List<Memo> findOldestMemos(EntityManager em) {
-        return em.createQuery("SELECT m FROM Memo m ORDER BY m.createdDate ASC", Memo.class)
-                 .getResultList();
-    }
-	
+	//북마크 id 기준으로 최신 순으로
 	public static List<Memo> findMemosByBookmarkId(Long bookmarkId, EntityManager em) {
-        return em.createQuery("SELECT m FROM Memo m WHERE m.bookmark.bookmarkId = :bookmarkId", Memo.class)
-                 .setParameter("bookmarkId", bookmarkId)
-                 .getResultList();
-    }
+	    return em.createQuery("SELECT m FROM Memo m WHERE m.bookmark.bookmarkId = :bookmarkId ORDER BY m.createdDate DESC", Memo.class)
+	             .setParameter("bookmarkId", bookmarkId)
+	             .getResultList();
+	}
 
+	
 	public static void saveMemo(Memo memo, EntityManager em) {
 		em.persist(memo);
 	}
