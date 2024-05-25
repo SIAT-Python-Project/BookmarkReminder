@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -26,10 +27,10 @@ public class BookmarkCategory {
     private Long bookmarkCategoryId;
 
     @ManyToOne
-    @JoinColumn(name = "category_category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "bookmark_bookmark_id")
+    @JoinColumn(name = "bookmark_id")
     private Bookmark bookmark;
 }
