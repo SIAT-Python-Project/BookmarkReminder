@@ -23,7 +23,7 @@ public class MainController extends HttpServlet {
             return;
         }
 
-        url = "/getCategory.do";
+        url = "/mainPage.do";
         response.sendRedirect(url);
     }
 }

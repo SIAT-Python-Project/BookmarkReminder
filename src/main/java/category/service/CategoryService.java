@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import user.entity.User;
+import user.repository.UserRepository;
 
 public class CategoryService {
 	// Serivce에서 예외 처리/구현 해야 할 repository
@@ -66,9 +67,10 @@ public class CategoryService {
 	}
 	
 	// get Category by UserId
-	public static List<Category> getCategoriesByUserId(User user){
+	public static List<Category> getCategoriesByUserId(Long userId){
 		em = DbUtil.getEntityManager();
 		try {
+			User user = UserRepository.findUserByUserId(em, userId);
 			List<Category> categoryList = CategoryRepository.findCategoriesByUserId(em, user);
 			return categoryList;
 		} catch (Exception e) {
