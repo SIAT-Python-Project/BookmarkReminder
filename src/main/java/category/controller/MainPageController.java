@@ -1,5 +1,8 @@
 package category.controller;
 
+import bookmark.entity.Bookmark;
+import bookmarkcategory.entity.BookmarkCategory;
+import bookmarkcategory.service.BookmarkCategoryService;
 import category.entity.Category;
 import category.service.CategoryService;
 import user.entity.User;
@@ -25,7 +28,10 @@ public class MainPageController extends HttpServlet {
 
         try {
             List<Category> categories = CategoryService.getCategoriesByUserId(userId);
+            List<Bookmark> bookmarks = BookmarkCategoryService.getBookmarkListNotInCategory(userId);
             request.setAttribute("categories", categories);
+            request.setAttribute("bookmarks", bookmarks);
+
             url = "/views/category/mainPage.jsp";
             request.getRequestDispatcher(url).forward(request, response);
         } catch (IllegalArgumentException e) {

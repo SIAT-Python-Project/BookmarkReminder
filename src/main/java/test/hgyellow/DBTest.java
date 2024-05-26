@@ -1,5 +1,8 @@
 package test.hgyellow;
 
+import bookmark.entity.Bookmark;
+import bookmark.repository.BookmarkRepository;
+import bookmark.service.BookmarkService;
 import category.entity.Category;
 import category.repository.CategoryRepository;
 import common.util.DbUtil;
@@ -28,11 +31,20 @@ public class DBTest {
 
         User user = UserRepository.findUserByUserId(em, 1L);
 
-        for (int i = 1; i <= 5; i++) {
-            CategoryRepository.createCategory(em, Category.builder()
-                    .categoryName("category" + i)
-                    .user(user)
-                    .build());
+//        for (int i = 1; i <= 5; i++) {
+//            CategoryRepository.createCategory(em, Category.builder()
+//                    .categoryName("category" + i)
+//                    .user(user)
+//                    .build());
+//        }
+
+        for(int i = 0; i < 5; i++) {
+            BookmarkRepository.saveBookmark(Bookmark.builder()
+                            .bookmarkName("bookmark"+i)
+                            .user(user)
+                            .createdDate(LocalDateTime.now())
+                            .url("url"+i)
+                    .build(), em);
         }
 
         tx.commit();
