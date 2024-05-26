@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>로그인</title>
+    <title>BookmarkReminder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/static/css/layout/layout.css" rel="stylesheet" type="text/css">
     <link href="/static/css/category/mainPage.css" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
     <h1>${sessionScope.nickname}님 반가워요!</h1>
     <div class="category-header">
         <h2 class="category-text">Category 목록</h2>
-        <button class="category-btn" onclick="location.href=''">카테고리 생성</button>
+        <button class="category-btn" onclick="location.href='/categoryInsertForm.do'">카테고리 생성</button>
     </div>
     <ul class="container-element">
         <c:forEach var="category" items="${requestScope.categories}">
