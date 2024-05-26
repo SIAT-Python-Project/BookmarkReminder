@@ -34,13 +34,12 @@ public class BookmarkService {
 						                .user(user)
 						                .build();
             BookmarkRepository.saveBookmark(bookmark, em);
-            
             Category category = CategoryRepository.findCategoryById(em, categoryId);
             
-            BookmarkCategoryRepository.saveMemo(BookmarkCategory.builder()
-            													.category(category)
-            													.bookmark(bookmark)
-            													.build(), em);
+            BookmarkCategoryRepository.insertBookmarkCategory(em, BookmarkCategory.builder()
+																		.category(category)
+																		.bookmark(bookmark)
+																		.build());
             tx.commit();
         } catch (Exception e) {
         	e.printStackTrace();

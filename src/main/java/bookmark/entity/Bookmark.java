@@ -1,6 +1,7 @@
 package bookmark.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import bookmark.dto.BookmarkDTO;
@@ -56,6 +57,7 @@ public class Bookmark {
                           .bookmarkName(bookmarkName)
                           .url(url)
                           .createdDate(createdDate)
+                          .formattedCreatedDate(createdDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")))
                           .user(user.toDTO())
 //                        .bookmarkCategories(bookmarkCategories.stream()
 //                                                              .map(BookmarkCategory::toDTO)
