@@ -16,23 +16,18 @@ import memo.repository.MemoRepository;
 
 public class MemoService {
 
-	public static List<MemoDTO> findMemosByBookmarkId(Long bookmarkId) {
+	public static List<MemoDTO> findMemosByBookmarkId(Long bookmarkId) throws IllegalArgumentException {
 		EntityManager em = DbUtil.getEntityManager();
 		List<Memo> memos = null;
 		List<MemoDTO> memoDtos = null;
-
-		try {
-			memos = MemoRepository.findMemosByBookmarkId(bookmarkId, em);
-			if (memos.isEmpty()) {
-				throw new IllegalArgumentException("메모 조회 실패: 해당 ID의 북마크에 메모가 없습니다.");
-			}
-			memoDtos = memos.stream().map(memo -> memo.toDTO()).collect(Collectors.toList());
-		} catch (Exception e) {
-			throw new IllegalArgumentException("메모 조회 실패: " + e.getMessage());
-		} finally {
-			em.close();
+			
+		memos = MemoRepository.findMemosByBookmarkId(bookmarkId, em);
+		if (memos.isEmpty()) {
+			throw new IllegalArgumentException("메모 조회 실패: 해당 ID의 북마크에 메모가 없습니다.");
 		}
-
+		memoDtos = memos.stream().map(memo -> memo.toDTO()).collect(Collectors.toList());	
+		
+		em.close();
 		return memoDtos;
 	}
 

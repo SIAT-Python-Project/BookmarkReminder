@@ -20,12 +20,16 @@ public class BookmarkDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long bookmarkId = Long.parseLong(request.getParameter("bookmarkId"));
 		BookmarkDTO bookmarkDto = BookmarkService.getBookmark(bookmarkId);
-		List<MemoDTO> memos = MemoService.findMemosByBookmarkId(bookmarkId);
+
+		try {
+			List<MemoDTO> memos = MemoService.findMemosByBookmarkId(bookmarkId);
+			request.setAttribute("memos", memos);
+		} catch (IllegalArgumentException e) {
+			request.setAttribute("errorMessage", e.getMessage());
+		}
 
 		request.setAttribute("bookmark", bookmarkDto);
-		request.setAttribute("memos", memos);
-
-        request.getRequestDispatcher("/views/bookmark/bookmarkdetail.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/bookmark/bookmarkdetail.jsp").forward(request, response);
 	}
 
 }

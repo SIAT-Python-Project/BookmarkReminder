@@ -1,6 +1,7 @@
 package memo.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import bookmark.entity.Bookmark;
 import jakarta.persistence.Column;
@@ -40,11 +41,13 @@ public class Memo {
         this.comment = newComment;
     }
     
-    public MemoDTO toDTO() {
+    public MemoDTO toDTO() {    	
+    	
         return MemoDTO.builder()
                       .memoId(memoId)
                       .comment(comment)
                       .createdDate(createdDate)
+                      .formattedCreatedDate(createdDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")))
                       .bookmark(bookmark.toDTO())
                       .build();
     }

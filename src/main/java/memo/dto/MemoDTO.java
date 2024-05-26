@@ -21,6 +21,7 @@ public class MemoDTO {
 	private Long memoId;
     private String comment;
     private LocalDateTime createdDate;
+    private String formattedCreatedDate;
     private BookmarkDTO bookmark;
     
     public Memo toEntity() {
