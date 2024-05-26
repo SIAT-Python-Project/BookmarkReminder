@@ -27,6 +27,7 @@ public class BookmarkDTO {
     private String bookmarkName;
     private String url;
     private LocalDateTime createdDate;
+    private String formattedCreatedDate;
     private UserDTO user;
 //  private List<BookmarkCategoryDTO> bookmarkCategories;
 //  private List<MemoDTO> memos;
