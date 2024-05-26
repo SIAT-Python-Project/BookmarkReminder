@@ -25,9 +25,9 @@ public class CategoryService {
 	public static EntityTransaction tx;
 	
 	// categoryName 기준으로 Category 존재 여부 확인 : Name에 해당하는 Category가 있는지 확인! (전체 카테고리 가져온 후에 각각 이름 비교하여 있으면 true, 없으면 false)
-	public static boolean existCategoryByName(EntityManager em, String categoryName) {
-		List<Category> allCategories = CategoryRepository.findAllCategories(em);
-		for(Category category : allCategories) {
+	public static boolean existCategoryByName(EntityManager em, User user, String categoryName) {
+		List<Category> allCategoriesByUser = CategoryRepository.findCategoriesByUserId(em, user);
+		for(Category category : allCategoriesByUser) {
 			if(category.getCategoryName().toUpperCase().equals(categoryName.toUpperCase())) {
 				return true;
 			}
@@ -85,15 +85,14 @@ public class CategoryService {
 		tx.begin();
 		
 		Category newCategory = null;
+		User user;
 		
 		try {
+			user = UserRepository.findUserByUserId(em, userId);
 			// 카테고리 이름 중복 확인
-			if(existCategoryByName(em, categoryName)) {
-				System.out.println("카테고리 생성 실패");
+			if(existCategoryByName(em, user, categoryName)) {
 				throw new IllegalArgumentException("카테고리 생성 실패 : 카테고리 이름 중복!");
 			} else {
-				User user = UserRepository.findUserByUserId(em, userId);
-
 				newCategory = Category.builder()
 	   					   			  .categoryName(categoryName)
 									  .user(user)
@@ -116,16 +115,17 @@ public class CategoryService {
 	}
 	
 	// update Category
-	public static Category updateCategory(Long categoryId, String newCategoryName) {
+	public static Category updateCategory(Long userId, Long categoryId, String newCategoryName) {
 		em = DbUtil.getEntityManager();
 		tx = em.getTransaction();
 		
 		Category category = null;
+		User user;
 		
 		tx.begin();
 		
 		try {
-			
+			user = UserRepository.findUserByUserId(em, userId);
 			// category 존재 여부 확인
 			category = CategoryRepository.findCategoryById(em, categoryId);
 			
@@ -133,7 +133,7 @@ public class CategoryService {
 			if(category != null) {
 				// 변경할 이름 중복 여부 확인
 				// 중복일 경우
-				if(existCategoryByName(em, newCategoryName)) {
+				if(existCategoryByName(em, user, newCategoryName)) {
 					throw new IllegalArgumentException("카테고리 변경 실패 : 카테고리 이름 중복!");
 				// 중복이 아닐 경우
 				} else {
@@ -154,7 +154,7 @@ public class CategoryService {
 		
 		return category;
 	}
-	
+
 	// delete Category
 	public static void deleteCategory(Long categoryId) {
 		em = DbUtil.getEntityManager();

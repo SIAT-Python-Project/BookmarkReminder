@@ -12,7 +12,7 @@
     <div class="container mt-5">
         <h1>${category.categoryName}</h1>
         <!-- update category -->
-        <form action="/updateCategory.do" method="post"></form>
+        <button type="button" onclick="location.href='/updateCategoryForm.do?categoryId=${category.categoryId}'">카테고리 수정</button>
         
         <!-- delete category -->
         <form action="/deleteCategory.do" method="post">
@@ -35,6 +35,10 @@
 	        	</tr>
         	</div>
         </c:forEach>
+        
+        <div>
+        	<button class="main-btn" onclick="location.href='/main.do'">메인으로</button>
+        </div>
     </div>
 
     <!-- Bootstrap and jQuery scripts -->
