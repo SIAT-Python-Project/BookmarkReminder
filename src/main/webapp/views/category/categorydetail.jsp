@@ -1,51 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Category Details</title>
+    <title>${category.categoryName}</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h1>카테고리 상세페이지 : JSP</h1>
+        <h1>${category.categoryName}</h1>
+        <!-- update category -->
+        <form action="/updateCategory.do" method="post"></form>
         
-        <a href="/bookmark/detail?bookmarkId=2">북마크 이름</a>
+        <!-- delete category -->
+        <form action="/deleteCategory.do" method="post">
+        	<button type="submit">카테고리 삭제</button>
+        </form>
         
-        <!-- Trigger/Add Bookmark Modal Button -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBookmarkModal">
-            북마크 추가
-        </button>
-
-        <!-- Add Bookmark Modal -->
-        <div class="modal fade" id="addBookmarkModal" tabindex="-1" role="dialog" aria-labelledby="addBookmarkModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addBookmarkModalLabel">북마크 추가</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/bookmark/insert" method="post">
-                            <div class="form-group">
-                                <label for="bookmarkName">북마크 이름:</label>
-                                <input type="text" class="form-control" id="bookmarkName" name="bookmarkName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="bookmarkUrl">URL:</label>
-                                <input type="url" class="form-control" id="bookmarkUrl" name="url" required>
-                            </div>
-                            <input type="hidden" name="categoryId" value="2"> <!-- 테스트 용 -->
-                            <%-- <input type="hidden" name="categoryId" value="${categoryId}"> --%>
-                            <button type="submit" class="btn btn-primary">저장</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- save Bookmark -->
+        
+        <!-- bookmark test -->
+        <c:forEach items="${requestScope.bookmarkList}" var="bookmark">
+        	<input type="hidden" name="bookmarkId" value="${bookmark.bookmarkId}">
+        	<div>
+	        	<tr>
+	        		<td>
+	        		<a href="/bookmark/detail?bookmarkId=${bookmark.bookmarkId}">${bookmark.bookmarkName}</a>
+	        		<form action="${bookmark.url}" method="get">
+	        			<button type="sumbit" class="btn btn-primary">url 이동</button>
+	        		</form>
+	        		</td>
+	        	</tr>
+        	</div>
+        </c:forEach>
     </div>
 
     <!-- Bootstrap and jQuery scripts -->
