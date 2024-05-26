@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import user.entity.User;
+import user.repository.UserRepository;
 
 public class CategoryService {
 	// Serivce에서 예외 처리/구현 해야 할 repository
@@ -24,16 +25,13 @@ public class CategoryService {
 	public static EntityTransaction tx;
 	
 	// categoryName 기준으로 Category 존재 여부 확인 : Name에 해당하는 Category가 있는지 확인! (전체 카테고리 가져온 후에 각각 이름 비교하여 있으면 true, 없으면 false)
-	public static boolean existCategoryByName(String categoryName) {
-		em = DbUtil.getEntityManager();
-	
+	public static boolean existCategoryByName(EntityManager em, String categoryName) {
 		List<Category> allCategories = CategoryRepository.findAllCategories(em);
 		for(Category category : allCategories) {
 			if(category.getCategoryName().toUpperCase().equals(categoryName.toUpperCase())) {
 				return true;
 			}
 		}
-		em.close();
 		return false;
 	}
 	
@@ -66,9 +64,10 @@ public class CategoryService {
 	}
 	
 	// get Category by UserId
-	public static List<Category> getCategoriesByUserId(User user){
+	public static List<Category> getCategoriesByUserId(Long userId){
 		em = DbUtil.getEntityManager();
 		try {
+			User user = UserRepository.findUserByUserId(em, userId);
 			List<Category> categoryList = CategoryRepository.findCategoriesByUserId(em, user);
 			return categoryList;
 		} catch (Exception e) {
@@ -79,7 +78,7 @@ public class CategoryService {
 	}
 	
 	// create Category
-	public static Category createCategory(String categoryName) {
+	public static Category createCategory(String categoryName, Long userId) {
 		em = DbUtil.getEntityManager();
 		tx = em.getTransaction();
 		
@@ -89,13 +88,17 @@ public class CategoryService {
 		
 		try {
 			// 카테고리 이름 중복 확인
-			if(existCategoryByName(categoryName)) {
+			if(existCategoryByName(em, categoryName)) {
 				System.out.println("카테고리 생성 실패");
 				throw new IllegalArgumentException("카테고리 생성 실패 : 카테고리 이름 중복!");
 			} else {
+				User user = UserRepository.findUserByUserId(em, userId);
+
 				newCategory = Category.builder()
 	   					   			  .categoryName(categoryName)
+									  .user(user)
 	   					   			  .build();
+
 				CategoryRepository.createCategory(em, newCategory);
 			}
 			
@@ -130,7 +133,7 @@ public class CategoryService {
 			if(category != null) {
 				// 변경할 이름 중복 여부 확인
 				// 중복일 경우
-				if(existCategoryByName(newCategoryName)) {
+				if(existCategoryByName(em, newCategoryName)) {
 					throw new IllegalArgumentException("카테고리 변경 실패 : 카테고리 이름 중복!");
 				// 중복이 아닐 경우
 				} else {
