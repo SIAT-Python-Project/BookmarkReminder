@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>Bookmark Details</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         .post-it {
             background-color: #fffbcc;
@@ -41,6 +42,9 @@
         .post-it .action-buttons {
             margin-top: 10px;
         }
+        .post-it .action-buttons .btn {
+            margin-right: 5px;
+        }
         .no-memos {
             text-align: center;
             color: #999;
@@ -67,17 +71,17 @@
     </div>
 
     <h2 class="mt-4">Add Memo</h2>
-    <form action="/memo/insert" method="post" onsubmit="return validateMemo();">
+    <form id="addMemoForm">
         <div class="form-group">
             <label for="memo">Memo:</label>
             <textarea class="form-control" id="memo" name="memo" rows="3" required></textarea>
         </div>
-        <input type="hidden" name="bookmarkId" value="${bookmark.bookmarkId}">
+        <input type="hidden" id="bookmarkId" value="${bookmark.bookmarkId}">
         <button type="submit" class="btn btn-primary">Add Memo</button>
     </form>
 
     <h2 class="mt-4">Memos</h2>
-    <div class="list-group">
+    <div class="list-group" id="memoList">
         <c:if test="${empty memos}">
             <p class="no-memos">${errorMessage}</p>
         </c:if>
@@ -126,7 +130,6 @@
     </div>
 </div>
 
-
 <script type="text/javascript">
     // 새 메모 추가 검증
     function validateMemo() {
@@ -153,8 +156,99 @@
         document.getElementById('editMemoId').value = memoId;
         $('#editMemoModal').modal('show');
     }
-</script>
 
+    function addMemo(event) {
+        event.preventDefault();
+        if (!validateMemo()) {
+            return;
+        }
+        var memoContent = document.getElementById('memo').value;
+        var bookmarkId = document.getElementById('bookmarkId').value;
+
+        axios.post('/memo/insert', {
+            memo: memoContent,
+            bookmarkId: bookmarkId
+        })
+        .then(function (response) {
+            // 성공적으로 메모 추가 시 페이지를 새로고침하지 않고 UI 업데이트
+            var memos = response.data;
+            var memoList = document.getElementById('memoList');
+            memoList.innerHTML = '';
+
+            if (memos.length === 0) {
+                var noMemos = document.createElement('p');
+                noMemos.classList.add('no-memos');
+                noMemos.textContent = 'No memos available.';
+                memoList.appendChild(noMemos);
+            } else {
+                memos.forEach(function (memo) {
+                    var postIt = document.createElement('div');
+                    postIt.classList.add('post-it');
+
+                    var comment = document.createElement('p');
+                    comment.classList.add('comment');
+                    comment.textContent = memo.comment;
+
+                    var createdDate = document.createElement('small');
+                    createdDate.classList.add('created-date');
+                    createdDate.textContent = memo.formattedCreatedDate;
+
+                    var actionButtons = document.createElement('div');
+                    actionButtons.classList.add('action-buttons');
+
+                    var editButton = document.createElement('a');
+                    editButton.href = 'javascript:void(0);';
+                    editButton.classList.add('btn', 'btn-primary', 'btn-sm');
+                    editButton.textContent = '수정';
+                    editButton.onclick = function () {
+                        showEditModal(memo.memoId, memo.comment);
+                    };
+
+                    var deleteForm = document.createElement('form');
+                    deleteForm.action = '/memo/delete';
+                    deleteForm.method = 'post';
+                    deleteForm.onsubmit = function () {
+                        return confirm('정말 삭제하시겠습니까?');
+                    };
+                    deleteForm.style.display = 'inline';
+
+                    var memoIdInput = document.createElement('input');
+                    memoIdInput.type = 'hidden';
+                    memoIdInput.name = 'memoId';
+                    memoIdInput.value = memo.memoId;
+
+                    var bookmarkIdInput = document.createElement('input');
+                    bookmarkIdInput.type = 'hidden';
+                    bookmarkIdInput.name = 'bookmarkId';
+                    bookmarkIdInput.value = bookmarkId;
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.type = 'submit';
+                    deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+                    deleteButton.textContent = '삭제';
+
+                    deleteForm.appendChild(memoIdInput);
+                    deleteForm.appendChild(bookmarkIdInput);
+                    deleteForm.appendChild(deleteButton);
+
+                    actionButtons.appendChild(editButton);
+                    actionButtons.appendChild(deleteForm);
+
+                    postIt.appendChild(comment);
+                    postIt.appendChild(createdDate);
+                    postIt.appendChild(actionButtons);
+
+                    memoList.appendChild(postIt);
+                });
+            }
+        })
+        .catch(function (error) {
+            console.error('Error adding memo:', error);
+        });
+    }
+
+    document.getElementById('addMemoForm').addEventListener('submit', addMemo);
+</script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
