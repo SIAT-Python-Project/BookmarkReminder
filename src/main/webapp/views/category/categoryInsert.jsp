@@ -13,7 +13,7 @@
     <Form class="categoryForm" action="/categoryInsert.do" method="POST">
         <h2>카테고리 생성</h2>
         <div class="textForm">
-            <input name="categoryName" type="text" class="categoryName" placeholder="Category">
+            <input name="categoryName" type="text" class="categoryName" placeholder="Category" required>
         </div>
         <div class="btnForm">
             <input type="submit" class="btn" value="C R E A T E"/>
