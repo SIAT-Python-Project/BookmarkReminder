@@ -7,6 +7,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import org.hibernate.exception.ConstraintViolationException;
 import user.dto.UserDTO;
+import user.entity.Role;
 import user.entity.User;
 import user.repository.UserRepository;
 
@@ -28,6 +29,7 @@ public class UserService {
                 .loginId(loginId)
                 .password(PasswordEncipherUtil.createPassword(password))
                 .nickname(nickname)
+                .role(Role.USER)
                 .email(email)
                 .createdDate(LocalDateTime.now())
                 .build();

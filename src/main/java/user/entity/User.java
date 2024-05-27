@@ -1,6 +1,5 @@
 package user.entity;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -8,12 +7,7 @@ import java.util.List;
 
 import bookmark.entity.Bookmark;
 import category.entity.Category;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import user.dto.UserDTO;
 
@@ -44,6 +38,9 @@ public class User {
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(name = "user_role")
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<Bookmark> bookMarks = new ArrayList<>();
