@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bookmark.service.BookmarkService;
 
@@ -30,13 +31,19 @@ public class BookmarkInsertController extends HttpServlet {
             categoryList.add(categoryNames);
         }
         
-//		HttpSession session = request.getSession();
-//		Long userId = Long.parseLong((String) session.getAttribute("userId"));
-        
-		Long userId = 1L;
-		BookmarkService.addBookmark(bookmarkName, bookmarkUrl, userId, categoryList);
-		       
-        response.sendRedirect("/views/category/categorydetail.jsp");
+		HttpSession session = request.getSession(false);
+		
+		try {
+			Long userId = Long.parseLong(session.getAttribute("userId").toString());
+			Long bookmarkId = BookmarkService.addBookmark(bookmarkName, bookmarkUrl, userId, categoryList);
+			
+			response.sendRedirect("/bookmark/detail?bookmarkId=" + bookmarkId);
+			
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			request.getRequestDispatcher("/views/error/error.jsp").forward(request, response);
+		}
+		
 		
 	}
 
