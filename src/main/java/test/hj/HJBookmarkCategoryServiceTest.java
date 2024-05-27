@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bookmark.entity.Bookmark;
+import bookmark.repository.BookmarkRepository;
 import bookmark.service.BookmarkService;
+import bookmarkcategory.entity.BookmarkCategory;
 import bookmarkcategory.service.BookmarkCategoryService;
 import category.entity.Category;
-import category.repository.CategoryRepository;
 import category.service.CategoryService;
-import common.util.DbUtil;
-import jakarta.persistence.EntityManager;
+import user.dto.UserDTO;
 import user.entity.User;
 import user.service.UserService;
 
@@ -39,7 +39,7 @@ public class HJBookmarkCategoryServiceTest {
 //    	getBookmarksNotInCategory(3L);
     	
 //    	deleteBookmarkCategoryByBookmarkId(3L);
-    	deleteBookmarkCategoryByCategoryId(8L);
+//    	deleteBookmarkCategoryByCategoryId(8L);
     	
 //    	EntityManager em = DbUtil.getEntityManager();
 //    	User test = em.find(User.class, 2L);
@@ -47,6 +47,18 @@ public class HJBookmarkCategoryServiceTest {
 //    	Category testC = CategoryService.getCategoryByCategoryId(7L);
 //    	Bookmark testB = BookmarkService.getBookmark(13L);
 //    	createBookmarkCategory(testB, testC);
+//    	
+//    	BookmarkService.addBookmark("bookmark1", "testurl", 1L, 5L);
+//    	BookmarkService.addBookmark("bookmark2", "testurl2", 1L, 5L);
+//    	BookmarkService.addBookmark("bookmark3", "testurl3", 1L, 6L);
+//    	
+//    	CategoryService.deleteCategory(3L);
+    	
+    	
+//    	Category testC = CategoryService.getCategoryByCategoryId(4L);
+//    	BookmarkCategoryService.createBookmarkCategory(testB, testC);
+    	
+    	
     	
     	
     	
@@ -93,9 +105,9 @@ public class HJBookmarkCategoryServiceTest {
         }
     }
     
-    private static void deleteBookmarkCategoryByCategoryId(Long categoryId) {
+    private static void deleteBookmarByCategoryId(Long categoryId) {
         try {
-            BookmarkCategoryService.deleteBookmarkCategoryByCategoryId(categoryId);
+            BookmarkCategoryService.deleteBookmarkByCategoryId(categoryId);
             System.out.println("삭제 성공!");
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
