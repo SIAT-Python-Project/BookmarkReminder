@@ -4,6 +4,8 @@ import java.util.List;
 
 import category.entity.Category;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import user.entity.User;
 
 public class CategoryRepository {
@@ -41,5 +43,17 @@ public class CategoryRepository {
 		em.remove(category);
 	}
 	
+	// 카테고리 이름으로 Category 찾기
+    public static Category findCategoryByName(EntityManager em, String categoryName, User user) {
+        String sql = "SELECT c FROM Category c WHERE c.categoryName = :categoryName AND c.user = :user";
+        TypedQuery<Category> query = em.createQuery(sql, Category.class);
+        query.setParameter("categoryName", categoryName);
+        query.setParameter("user", user);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 	
 }

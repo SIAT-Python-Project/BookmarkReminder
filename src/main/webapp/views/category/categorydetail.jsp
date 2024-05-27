@@ -20,6 +20,7 @@
         </form>
         
         <!-- save Bookmark -->
+        <button type="button" onclick="location.href='/bookmark/insert/form'">북마크 추가</button>
         
         <!-- bookmark test -->
         <c:forEach items="${requestScope.bookmarkList}" var="bookmark">
