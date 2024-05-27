@@ -1,5 +1,6 @@
 package user.controller;
 
+import org.json.JSONObject;
 import user.entity.Role;
 import user.entity.User;
 import user.service.UserService;
@@ -10,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 @WebServlet("/login.do")
 public class LoginController extends HttpServlet {
@@ -19,8 +23,17 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "/views/error/error.jsp";
 
-        String loginId = request.getParameter("loginId");
-        String pw = request.getParameter("pw");
+        JSONObject body = new JSONObject(
+                new BufferedReader(
+                        new InputStreamReader(request.getInputStream())
+                )
+                        .lines()
+                        .collect(Collectors.joining()));
+
+        String loginId = body.getString("loginId");
+        String pw = body.getString("pw");
+
+        JSONObject json = new JSONObject();
 
         try {
             User user = UserService.login(loginId, pw);
@@ -37,11 +50,13 @@ public class LoginController extends HttpServlet {
             }
 
             url = "/main.do";
-
-            response.sendRedirect(url);
+            json.put("loginSuccess", true);
+            json.put("redirectURL", url);
         } catch (IllegalArgumentException e) {
-            request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher(url).forward(request, response);
+            json.put("loginSuccess", false);
+            json.put("message", e.getMessage());
         }
+        response.setContentType("application/json");
+        response.getWriter().write(json.toString());
     }
 }
