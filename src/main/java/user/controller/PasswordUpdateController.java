@@ -15,7 +15,7 @@ public class PasswordUpdateController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "/views/errors/error.jsp";
+        String url = "/views/error/error.jsp";
         HttpSession session = request.getSession();
 
         Long id = (Long) session.getAttribute("userId");
