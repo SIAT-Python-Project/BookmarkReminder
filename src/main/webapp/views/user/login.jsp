@@ -16,10 +16,10 @@
     <Form class="loginForm" action="/login.do" method="POST">
         <h2>로그인</h2>
         <div class="textForm">
-            <input name="loginId" type="text" class="id" placeholder="아이디">
+            <input name="loginId" type="text" class="id" placeholder="아이디" required>
         </div>
         <div class="textForm">
-            <input name="pw" type="password" class="pw" placeholder="비밀번호">
+            <input name="pw" type="password" class="pw" placeholder="비밀번호" required>
         </div>
         <div class="btnForm">
             <input type="submit" class="btn" value="L O G I N"/>

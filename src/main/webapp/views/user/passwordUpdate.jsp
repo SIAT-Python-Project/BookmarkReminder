@@ -16,13 +16,13 @@
 
     <h2>비밀번호 수정</h2>
     <div class="textForm">
-        <input name="originPw" type="text" class="originPw" placeholder="기존 비밀번호">
+        <input name="originPw" type="text" class="originPw" placeholder="기존 비밀번호" required>
     </div>
     <div class="textForm">
-        <input name="pw" type="password" class="pw" placeholder="비밀번호">
+        <input name="pw" type="password" class="pw" placeholder="비밀번호" required>
     </div>
     <div class="textForm">
-        <input name="pwConfirm" type="password" class="pw" placeholder="비밀번호 확인">
+        <input name="pwConfirm" type="password" class="pw" placeholder="비밀번호 확인" required>
     </div>
     <div class="btnForm">
         <input type="submit" class="btn" value="U P D A T E"/>
