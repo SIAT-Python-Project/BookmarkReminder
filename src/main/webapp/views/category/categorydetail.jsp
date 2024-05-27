@@ -16,7 +16,9 @@
         
         <!-- delete category -->
         <form action="/deleteCategory.do" method="post">
-        	<button type="submit">카테고리 삭제</button>
+        	<button type="submit" name="categoryId" value="${category.categoryId}" onclick="return confirm('카테고리를 삭제하시겠습니까? (카테고리에 저장된 북마크가 있을 경우, 북마크와 메모 또한 같이 삭제됩니다.)')">
+        	카테고리 삭제
+        	</button>
         </form>
         
         <!-- save Bookmark -->
@@ -28,8 +30,7 @@
 	        	<tr>
 	        		<td>
 	        		<a href="/bookmark/detail?bookmarkId=${bookmark.bookmarkId}">${bookmark.bookmarkName}</a>
-	        		<form action="${bookmark.url}" method="get">
-	        			<button type="sumbit" class="btn btn-primary">url 이동</button>
+	        			<button type="button" class="btn btn-primary" onclick="location.href='${bookmark.url}'">url 이동</button>
 	        		</form>
 	        		</td>
 	        	</tr>
@@ -37,7 +38,7 @@
         </c:forEach>
         
         <div>
-        	<button class="main-btn" onclick="location.href='/main.do'">메인으로</button>
+        	<button class="main-btn" onclick="location.href='/mainPage.do'">메인으로</button>
         </div>
     </div>
 
