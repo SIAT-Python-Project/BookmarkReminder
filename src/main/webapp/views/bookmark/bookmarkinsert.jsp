@@ -24,7 +24,7 @@
             <form action="/bookmark/insert" method="post">
                 <div class="form-group">
                     <label for="categoryName">Category Name:</label>
-                    <input type="text" class="form-control" id="categoryName" name="categoryName">
+                    <input type="text" class="form-control" id="categoryName" name="categoryName" value="${requestScope.categoryName != null ? requestScope.categoryName : ''}">
                 </div>
                 <div class="form-group">
                     <label for="bookmarkName">Bookmark Name:</label>

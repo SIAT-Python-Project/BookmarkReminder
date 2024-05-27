@@ -84,7 +84,7 @@ public class BookmarkService {
 
 	}
 
-	public static BookmarkDTO getBookmark(Long id) {
+	public static BookmarkDTO getBookmark(Long id) throws IllegalArgumentException {
 		EntityManager em = DbUtil.getEntityManager();
 		Bookmark bookmark = null;
 		BookmarkDTO bookmarkDTO = null;

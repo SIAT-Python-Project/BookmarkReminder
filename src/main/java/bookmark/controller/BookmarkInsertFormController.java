@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class BookmarkInsertFormController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("categoryName", request.getParameter("categoryName"));
 		request.getRequestDispatcher("/views/bookmark/bookmarkinsert.jsp").forward(request, response);
 	}
 
