@@ -19,10 +19,15 @@ public class AdminFilter extends HttpFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
+        String url = "/views/error/error.jsp";
+
+        if(session == null || session.getAttribute("userId") == null) {
+            request.setAttribute("error", "인증 실패: 새션이 없습니다.");
+            httpRequest.getRequestDispatcher(url).forward(request, response);
+            return;
+        }
 
         Role role = (Role) session.getAttribute("role");
-
-        String url = "/views/error/error.jsp";
 
         if (role != Role.ADMIN) {
             request.setAttribute("error", "인증 실패: ADMIN 권한이 없습니다.");

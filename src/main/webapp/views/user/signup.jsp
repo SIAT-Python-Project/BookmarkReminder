@@ -16,19 +16,19 @@
 
     <h2>회원가입</h2>
     <div class="textForm">
-        <input name="loginId" type="text" class="id" placeholder="아이디">
+        <input name="loginId" type="text" class="id" placeholder="아이디" required>
     </div>
     <div class="textForm">
-        <input name="pw" type="password" class="pw" placeholder="비밀번호">
+        <input name="pw" type="password" class="pw" placeholder="비밀번호" required>
     </div>
     <div class="textForm">
-        <input name="pwConfirm" type="password" class="pw" placeholder="비밀번호 확인">
+        <input name="pwConfirm" type="password" class="pw" placeholder="비밀번호 확인" required>
     </div>
     <div class="textForm">
-        <input name="email" type="text" class="email" placeholder="이메일">
+        <input name="email" type="text" class="email" placeholder="이메일" required>
     </div>
     <div class="textForm">
-        <input name="nickname" type="text" class="nickname" placeholder="닉네임">
+        <input name="nickname" type="text" class="nickname" placeholder="닉네임" required>
     </div>
     <div class="btnForm">
         <input type="submit" class="btn" value="J O I N"/>
