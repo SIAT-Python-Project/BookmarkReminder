@@ -9,14 +9,22 @@
         <c:if test="${sessionScope.role == 'ADMIN'}">
             <h2 style="color: red; margin-top: 10px">ADMIN 계정입니다.</h2>
         </c:if>
+
         <div class="header-user-info">
             <c:if test="${empty sessionScope.userId}">
                 <span class="header-span"><input type="button" value="로그인"
                                                  onclick="location.href='/loginForm.do'"></span>
             </c:if>
             <c:if test="${not empty sessionScope.userId}">
-                <span class="header-span"><input type="button" value="${sessionScope.nickname}님"
+
+                <c:if test="${sessionScope.role == 'ADMIN'}">
+                    <span class="header-span"><input type="button" value="${sessionScope.adminName}님"
                                                  onclick="location.href='/user.do'"></span>
+                </c:if>
+                <c:if test="${sessionScope.role != 'ADMIN'}">
+                    <span class="header-span"><input type="button" value="${sessionScope.nickname}님"
+                                                     onclick="location.href='/user.do'"></span>
+                </c:if>
                 <span class="header-span"><input type="button" value="로그아웃" onclick="location.href='/logout.do'"></span>
             </c:if>
         </div>
