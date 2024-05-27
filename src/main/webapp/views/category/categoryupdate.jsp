@@ -14,7 +14,7 @@
         <h2>카테고리 수정</h2>
         <div class="textForm">
         	<input name="categoryId" type="hidden" value="${requestScope.category.categoryId}">
-            <input name="categoryName" type="text" class="categoryName" value="${requestScope.category.categoryName}">
+            <input name="categoryName" type="text" class="categoryName" value="${requestScope.category.categoryName}" required>
         </div>
         <div class="btnForm">
             <input type="submit" class="btn" value="U P D A T E"/>
