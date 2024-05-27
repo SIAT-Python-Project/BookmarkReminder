@@ -125,6 +125,8 @@ git clone https://github.com/SIAT-Python-Project/BookmarkReminder.git
   
     6-2) bookmark
     - Showing the bookmark information and memos of the bookmark
+    - Creating new memo of the bookmark -> Showing new memo contents
+    - Updating/Deleteing memos
 
 ***
 
