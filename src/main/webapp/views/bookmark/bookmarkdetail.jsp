@@ -45,7 +45,7 @@
     <h2 class="mt-4">Memos</h2>
     <div class="list-group" id="memoList">
         <c:if test="${empty memos}">
-            <p class="no-memos">${errorMessage}</p>
+            <p class="no-memos">메모가 없습니다.</p>
         </c:if>
         <c:forEach var="memo" items="${memos}">
             <div class="post-it">
@@ -133,6 +133,8 @@
         })
         .then(function (response) {
             // 성공적으로 메모 추가 시 페이지를 새로고침하지 않고 UI 업데이트
+            document.getElementById('memo').value = '';
+            
             var memos = response.data;
             var memoList = document.getElementById('memoList');
             memoList.innerHTML = '';
