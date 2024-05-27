@@ -14,7 +14,7 @@
 <%@ include file="/views/layout/header.jsp" %>
 <body>
 <div class="container" style="height: ${(requestScope.users.size())*24+100}px;">
-    <h1>${sessionScope.nickname}님 반가워요!</h1>
+    <h1>${sessionScope.adminName}님 반가워요!</h1>
     <div class="user-header">
         <h2 class="user-text">User 목록</h2>
     </div>

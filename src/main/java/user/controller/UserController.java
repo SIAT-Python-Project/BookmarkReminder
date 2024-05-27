@@ -19,6 +19,11 @@ public class UserController extends HttpServlet {
         HttpSession session = request.getSession();
 
         Long id = (Long) session.getAttribute("userId");
+
+        if (session.getAttribute("adminId") != null) {
+            id = (Long) session.getAttribute("adminId");
+        }
+
         String url = "/views/error/error.jsp";
 
         try {

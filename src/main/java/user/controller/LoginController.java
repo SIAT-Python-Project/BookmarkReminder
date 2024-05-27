@@ -1,5 +1,6 @@
 package user.controller;
 
+import user.entity.Role;
 import user.entity.User;
 import user.service.UserService;
 
@@ -29,6 +30,11 @@ public class LoginController extends HttpServlet {
             session.setAttribute("userId", user.getId());
             session.setAttribute("nickname", user.getNickname());
             session.setAttribute("role", user.getRole());
+
+            if (user.getRole() == Role.ADMIN) {
+                session.setAttribute("adminName", user.getNickname());
+                session.setAttribute("adminId", user.getId());
+            }
 
             url = "/main.do";
 
