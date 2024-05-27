@@ -153,8 +153,8 @@ public class BookmarkCategoryService {
 	 * 2) 연관관계만 삭제(1:다 매핑일 경우)
 	 */
 	
-	// deleteBookmarkCategoryByCategoryId : CategoryId 기준으로 BookmarkCategory / Bookmark 삭제...
-	public static void deleteBookmarkCategoryByCategoryId(Long categoryId) {
+	// deleteBookmarkByCategoryId : CategoryId 기준으로 BookmarkCategory / Bookmark 삭제...
+	public static void deleteBookmarkByCategoryId(Long categoryId) {
 		EntityManager em = DbUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		
@@ -186,15 +186,7 @@ public class BookmarkCategoryService {
 				}
 			}
 			
-			// categoryId에 해당하는 bc 연관관계 조회
-			List<BookmarkCategory> deleteBcList = BookmarkCategoryRepository.findBookmarkCategoryByCategoryId(em, deleteCategory);
-			
-			// b-c 연관관계 삭제
-			for(BookmarkCategory bc : deleteBcList) {
-				BookmarkCategoryRepository.deleteBookmarkCategoryByCategoryId(em, bc);
-			}
-			
-			// category에 속하는 bookmark 삭제
+			// 해당 category에만 속하는 bookmark 삭제
 			for(Bookmark bookmark : deleteBookmarkList) {
 				BookmarkRepository.deleteBookmark(bookmark, em);
 			}
