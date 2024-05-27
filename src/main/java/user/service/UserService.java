@@ -95,6 +95,10 @@ public class UserService {
                 throw new IllegalArgumentException("수정 실패: 비밀번호 확인을 제대로 입력해주세요.");
             }
 
+            if (Objects.equals(password, newPassword)) {
+                throw new IllegalArgumentException("수정 실패: 기존 비밀번호하고 새로운 비밀번호가 같습니다.");
+            }
+
             targetUser.change(newUser);
 
             tx.commit();
