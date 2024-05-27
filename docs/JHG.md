@@ -6,6 +6,7 @@
 - 로그인과 관련된 모든 로직
   - url: /login.do
   - session 관리
+  - 비동기 처리
 - 비밀번호 수정과 관련된 모든 로직
   - url: /passwordUpdate.do
 - 정보 조회와 관련된 모든 로직
