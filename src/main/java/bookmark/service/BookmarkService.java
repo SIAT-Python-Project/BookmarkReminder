@@ -20,11 +20,13 @@ import user.repository.UserRepository;
 
 public class BookmarkService {
 
-	public static void addBookmark(String bookmarkName, String url, Long userId, List<String> categoryNames) {
+	public static Long addBookmark(String bookmarkName, String url, Long userId, List<String> categoryNames) {
 
 		EntityManager em = DbUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
+		
+		Long id = null;
 
 		try {
 			User user = UserRepository.findUserByUserId(em, userId);
@@ -54,7 +56,9 @@ public class BookmarkService {
 										.user(user)
 										.build();
 			BookmarkRepository.saveBookmark(bookmark, em);
-
+			
+			id = bookmark.getBookmarkId();
+			
 			// BookmarkCategory 관계 설정
 			for (Category category : categories) {
 				if (category != null) {
@@ -74,6 +78,9 @@ public class BookmarkService {
 		} finally {
 			em.close();
 		}
+		
+		
+		return id;
 
 	}
 
