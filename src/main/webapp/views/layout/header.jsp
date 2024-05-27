@@ -4,6 +4,9 @@
 <header>
     <div class="header-container">
         <h1 class="header-text">Bookmark Reminder</h1>
+        <c:if test="${sessionScope.role == 'ADMIN'}">
+            <h2 style="color: red; margin-top: 10px">ADMIN 계정입니다.</h2>
+        </c:if>
         <div class="header-user-info">
             <c:if test="${empty sessionScope.userId}">
                 <span class="header-span"><input type="button" value="로그인" onclick="location.href='/loginForm.do'"></span>

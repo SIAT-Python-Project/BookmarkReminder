@@ -12,6 +12,7 @@ import user.entity.User;
 import user.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class UserService {
@@ -137,5 +138,15 @@ public class UserService {
 
 
         return userDTO;
+    }
+
+    public static List<User> findAll() {
+        EntityManager em = DbUtil.getEntityManager();
+
+        List<User> users = UserRepository.findAllUserOfRoleUser(em);
+
+        em.close();
+
+        return users;
     }
 }

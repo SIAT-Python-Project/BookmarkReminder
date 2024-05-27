@@ -1,5 +1,7 @@
 package common.controller;
 
+import user.entity.Role;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +21,14 @@ public class MainController extends HttpServlet {
 
         if (session == null || session.getAttribute("userId") == null) {
             url = "/loginForm.do";
+            response.sendRedirect(url);
+            return;
+        }
+
+        Role role = (Role) session.getAttribute("role");
+
+        if (role == Role.ADMIN) {
+            url = "/userAll.do";
             response.sendRedirect(url);
             return;
         }

@@ -1,7 +1,10 @@
 package user.repository;
 
 import jakarta.persistence.EntityManager;
+import user.entity.Role;
 import user.entity.User;
+
+import java.util.List;
 
 public class UserRepository {
 
@@ -47,5 +50,13 @@ public class UserRepository {
 
     public static void delete(EntityManager em, User deleteUser) {
         em.remove(deleteUser);
+    }
+
+    public static List<User> findAllUserOfRoleUser(EntityManager em) {
+        String sql = "SELECT u FROM User u WHERE u.role = :role";
+
+        return em.createQuery(sql, User.class)
+                .setParameter("role", Role.USER)
+                .getResultList();
     }
 }

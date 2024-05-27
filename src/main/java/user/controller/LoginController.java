@@ -28,6 +28,7 @@ public class LoginController extends HttpServlet {
 
             session.setAttribute("userId", user.getId());
             session.setAttribute("nickname", user.getNickname());
+            session.setAttribute("role", user.getRole());
 
             url = "/main.do";
 
