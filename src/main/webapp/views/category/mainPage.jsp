@@ -24,7 +24,7 @@
     </ul>
     <div class="important-bookmark-header">
         <h2 class="important-bookmark-text">북마크 목록</h2>
-        <button class="bookmark-btn" onclick="location.href=''">북마크 생성</button>
+        <button class="bookmark-btn" onclick="location.href='/bookmark/insert/form'">북마크 생성</button>
     </div>
     <ul class="container-element">
         <c:forEach var="bookmark" items="${requestScope.bookmarks}">
