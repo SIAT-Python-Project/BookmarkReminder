@@ -7,51 +7,13 @@
     <meta charset="UTF-8">
     <title>Bookmark Details</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bookmark/bookmarkdetail.css" rel="stylesheet" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
-        .post-it {
-            background-color: #fffbcc;
-            border: 1px solid #f0e68c;
-            border-radius: 10px;
-            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            margin: 10px 0;
-            position: relative;
-        }
-        .post-it::before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 10px;
-            background-color: #fffbcc;
-            border-top: 10px solid #f0e68c;
-            border-radius: 10px 10px 0 0;
-        }
-        .post-it .comment {
-            font-size: 16px;
-            color: #333;
-        }
-        .post-it .created-date {
-            font-size: 12px;
-            color: #666;
-            text-align: right;
-        }
-        .post-it .action-buttons {
-            margin-top: 10px;
-        }
-        .post-it .action-buttons .btn {
-            margin-right: 5px;
-        }
-        .no-memos {
-            text-align: center;
-            color: #999;
-            margin: 20px 0;
-        }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>    
 </head>
+<%@ include file="/views/layout/bookmarkheader.jsp" %>
 <body>
 <div class="container mt-5">
     <h1 class="display-4">Bookmark Details</h1>
@@ -249,9 +211,5 @@
 
     document.getElementById('addMemoForm').addEventListener('submit', addMemo);
 </script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
